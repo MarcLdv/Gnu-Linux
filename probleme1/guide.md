@@ -81,11 +81,29 @@ cp .env.example .env
 nano .env
 ```
 
-Chaque variables doit être définie selon votre configuration MySQL, notamment le mot de passe (`DB_PASSWORD`) et les noms de bases de données (`DB_PROD` et `DB_ARCHIVE`). Si c'est la première fois que vous utilisez MYSQL vous aurez besoin de définir le mot de passe via la commande :
+Chaque variables doit être définie selon votre configuration MySQL, notamment le mot de passe (`DB_PASSWORD`) et les noms de bases de données (`DB_PROD` et `DB_ARCHIVE`).
+
+### Configuration du mot de passe MySQL
+
+Si c'est la première fois que vous utiliser MYSQL, il faudra définir le mot de passe root, pour cela utilisez le même mot de passe que celui défini auparavant dans le `DB_PASSWORD` du fichier `.env`** : puis exécutez ces commandes :
 
 ```bash
-mysql_secure_installation
+sudo mysql
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'MOT_DE_PASSE';
+FLUSH PRIVILEGES;
+EXIT;
 ```
+
+Remplacez `MOT_DE_PASSE` par le mot de passe que vous avez défini dans le fichier `.env`.
+
+Vous pouvez ensuite tester la connexion en exécutant :
+
+```bash
+mysql -u root -p
+```
+
+Indiquez votre mot de passe, si vous avez un message "Welcome to the MariaDB monitor", C'est que votre configuration fonctionne. Dans le cas contraire, vérifiez que le mot de passe correspond bien à celui défini dans le fichier `.env` et que MYSQL est correctement installé sur votre système.
 
 ### Initialisation des bases de données
 
@@ -172,7 +190,7 @@ Le système vous demandera dans un premier temps choisir un éditeur, vous pouve
 
 Cette configuration lance le script tous les jours à 2h du matin. Remplacez `/chemin/vers/scripts/` par le chemin absolu vers votre dossier de scripts. Le résultat de l'exécution sera enregistré dans le fichier de log `/var/log/archives.log`.
 
-Une fois la ligne ajoutée, sauvegardez et quittez l'éditeur (avec nano : `Ctrl+O`, `Entrée`, puis `Ctrl+X`). Pour vérifier si tâche a bien été ajoutée, il est possible de lister les CRON via la commande :
+Une fois la ligne ajoutée, sauvegardez et quittez l'éditeur (avec nano : `Ctrl+S`, puis `Ctrl+X`). Pour vérifier si tâche a bien été ajoutée, il est possible de lister les CRON via la commande :
 
 ```bash
 crontab -l
