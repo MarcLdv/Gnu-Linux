@@ -1,16 +1,9 @@
--- Script de peuplement de la base de production avec des données de test
+-- Peuplement de la base
 
 USE app_prod;
 
-INSERT INTO
-    clients (
-        nom,
-        prenom,
-        email,
-        adresse,
-        mot_de_passe
-    )
-VALUES (
+INSERT INTO clients (nom, prenom, email, adresse, mot_de_passe) VALUES 
+    (
         'Martin',
         'Jean',
         'jean.martin@email.com',
@@ -81,13 +74,8 @@ VALUES (
         '$2y$10$klmnopqrstuvwxyzabcde'
     );
 
-INSERT INTO
-    factures (
-        montant,
-        date_facture,
-        client_id
-    )
-VALUES (150.50, '2024-01-15', 1),
+INSERT INTO factures (montant, date_facture, client_id) VALUES 
+    (150.50, '2024-01-15', 1),
     (230.75, '2024-03-22', 1),
     (89.99, '2024-06-10', 2),
     (456.20, '2024-08-05', 2),
@@ -98,26 +86,16 @@ VALUES (150.50, '2024-01-15', 1),
     (190.00, '2025-11-03', 5),
     (425.60, '2026-01-08', 5);
 
-INSERT INTO
-    factures (
-        montant,
-        date_facture,
-        client_id
-    )
-VALUES (200.00, '2020-03-15', 6),
+INSERT INTO factures (montant, date_facture, client_id) VALUES 
+    (200.00, '2020-03-15', 6),
     (150.00, '2020-06-22', 6),
     (300.50, '2019-11-10', 7),
     (450.75, '2020-01-18', 7),
     (180.00, '2018-08-05', 8),
     (220.30, '2019-12-20', 8);
 
-INSERT INTO
-    factures (
-        montant,
-        date_facture,
-        client_id
-    )
-VALUES (500.00, '2010-05-12', 9),
+INSERT INTO factures (montant, date_facture, client_id) VALUES
+    (500.00, '2010-05-12', 9),
     (350.25, '2011-09-18', 9),
     (280.60, '2012-03-22', 10),
     (420.90, '2013-07-14', 10),

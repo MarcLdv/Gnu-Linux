@@ -1,4 +1,4 @@
--- Création de la base de production
+-- Base de production
 CREATE DATABASE IF NOT EXISTS app_prod;
 
 USE app_prod;
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS factures (
     INDEX idx_client_id (client_id)
 );
 
--- Création de la base d'archive
+-- Base d'archive
 CREATE DATABASE IF NOT EXISTS app_archive;
 
 USE app_archive;

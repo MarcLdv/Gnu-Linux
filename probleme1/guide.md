@@ -81,10 +81,10 @@ cp .env.example .env
 nano .env
 ```
 
-Chaque variables doit être définie selon votre configuration MySQL, notamment le mot de passe (`DB_PASSWORD`) et les noms de bases de données (`DB_PROD` et `DB_ARCHIVE`). Si c'est la premère fois que vous utiliser MYSQL vous aurez besoin de définir le mot de passe via la commande :
+Chaque variables doit être définie selon votre configuration MySQL, notamment le mot de passe (`DB_PASSWORD`) et les noms de bases de données (`DB_PROD` et `DB_ARCHIVE`). Si c'est la première fois que vous utilisez MYSQL vous aurez besoin de définir le mot de passe via la commande :
 
 ```bash
-sudo mysql_secure_installation`
+mysql_secure_installation
 ```
 
 ### Initialisation des bases de données
@@ -93,6 +93,12 @@ Une fois l'environnement configuré, il faut créer les bases de données ainsi 
 
 ```bash
 cd scripts/
+```
+
+Ensuite, rendez tous les scripts exécutables :
+
+```bash
+chmod +x *.sh
 ```
 
 Puis il faut éxecuter le script d'initialisation qui va créer la base de production et d'archive avec leurs tables associées :
@@ -166,7 +172,7 @@ Le système vous demandera dans un premier temps choisir un éditeur, vous pouve
 
 Cette configuration lance le script tous les jours à 2h du matin. Remplacez `/chemin/vers/scripts/` par le chemin absolu vers votre dossier de scripts. Le résultat de l'exécution sera enregistré dans le fichier de log `/var/log/archives.log`.
 
-Une fois la ligne ajoutée, sauvegardez et quittez l'éditeur (avec nano : `Ctrl+S`, puis `Ctrl+X`). Pour vérifier si tâche a bien été ajoutée, il est possible de lister les CRON via la commande :
+Une fois la ligne ajoutée, sauvegardez et quittez l'éditeur (avec nano : `Ctrl+O`, `Entrée`, puis `Ctrl+X`). Pour vérifier si tâche a bien été ajoutée, il est possible de lister les CRON via la commande :
 
 ```bash
 crontab -l
@@ -183,7 +189,7 @@ Le système comprend trois scripts :
 - [generation-rapport.sh](scripts/generation-rapport.sh) : Script principal qui génère le CA TTC par mois. Il peut être utilisé de trois manières :
   - Sans paramètre : génère le rapport du mois précédent
   - Avec un paramètre `YYYYMM` : génère le rapport pour un mois spécifique (ex: `202512` pour décembre 2025)
-  - Avec deux paramètres `MM/YY MM/YY` : génère le rapport pour une période personnalisée (ex: `01/25 03/25`)
+  - Avec deux paramètres `YYYY-MM YYYY-MM` : génère le rapport pour une période personnalisée (ex: `2025-01 2025-03`)
 
 - [rapport-mensuel.sh](scripts/rapport-mensuel.sh) : Script wrapper pour le rapport mensuel automatique
 
