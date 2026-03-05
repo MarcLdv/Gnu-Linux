@@ -174,11 +174,22 @@ crontab -l
 
 ## Génération automatique de rapports
 
-Une fois les données archivées et supprimées on peut mettre en place le système de génération de rapports. Pour cela il faudra suivre les mêmes étapes que pour l'archivage.
+Une fois les données archivées et supprimées, on peut mettre en place le système de génération de rapports. Le script principal [generation-rapport.sh](scripts/generation-rapport.sh) permet de générer le CA TTC par mois pour différentes périodes.
 
-### Script de génération des rapports
+### Scripts de génération des rapports
 
-Ce script va prendre en paramètre deux périodes écrites de cette façon `mois/année, mois/année` par exemple `01/25, 03/25`. Le script va alors récupérer toutes les factures depuis la date de départ puis il va afficher le CA TTC par mois jusqu'à la date de fin. Le tout sera placé dans un fichier report.
+Le système comprend trois scripts :
+
+- [generation-rapport.sh](scripts/generation-rapport.sh) : Script principal qui génère le CA TTC par mois. Il peut être utilisé de trois manières :
+  - Sans paramètre : génère le rapport du mois précédent
+  - Avec un paramètre `YYYYMM` : génère le rapport pour un mois spécifique (ex: `202512` pour décembre 2025)
+  - Avec deux paramètres `MM/YY MM/YY` : génère le rapport pour une période personnalisée (ex: `01/25 03/25`)
+
+- [rapport-mensuel.sh](scripts/rapport-mensuel.sh) : Script wrapper pour le rapport mensuel automatique
+
+- [rapport-annuel.sh](scripts/rapport-annuel.sh) : Script wrapper pour le rapport annuel (prend un paramètre `YYYYMM`)
+
+Les rapports incluent les factures des bases de production et d'archive, et sont sauvegardés dans un fichier texte avec la date de génération.
 
 ### Automatisation des rapports
 
@@ -195,7 +206,7 @@ Et y ajouter les lignes suivantes pour programmer les deux types de rapports :
 0 3 1 * * /chemin/vers/scripts/rapport-mensuel.sh >> /var/log/rgpd-mensuel.log 2>&1
 
 # RAPPORT annuel - 22 décembre à 4h
-0 4 22 12 * /chemin/vers/scripts/rapport.sh 202512 >> /var/log/rgpd-annuel.log 2>&1
+0 4 22 12 * /chemin/vers/scripts/rapport-annuel.sh 202512 >> /var/log/rgpd-annuel.log 2>&1
 ```
 
 Comme pour l'archivage, remplacez `/chemin/vers/scripts/` par le chemin absolu vers votre dossier de scripts. Sauvegardez et quittez l'éditeur. Les rapports seront maintenant générés automatiquement selon les horaires définis.

@@ -1,37 +1,47 @@
-# Script SQL d'initialisation de la base de données prod d'exemple
+-- Création de la base de production
 CREATE DATABASE IF NOT EXISTS app_prod;
 
-CREATE TABLE client (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nom VARCHAR(100),
-    prenom VARCHAR(100),
-    email VARCHAR(255) NOT NULL UNIQUE,
+USE app_prod;
+
+CREATE TABLE IF NOT EXISTS clients (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
     adresse TEXT,
     mot_de_passe VARCHAR(255) NOT NULL,
-    date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE facture (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    client_id INT NOT NULL,
+CREATE TABLE IF NOT EXISTS factures (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     montant DECIMAL(10, 2) NOT NULL,
     date_facture DATE NOT NULL,
-    FOREIGN KEY (client_id) REFERENCES client (id) ON DELETE CASCADE
+    client_id INT NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES clients (id) ON DELETE CASCADE,
+    INDEX idx_date_facture (date_facture),
+    INDEX idx_client_id (client_id)
 );
 
-# Script SQL d'initialisation de la base de données archive avec données anonymsées
+-- Création de la base d'archive
 CREATE DATABASE IF NOT EXISTS app_archive;
 
-CREATE TABLE clients_archive (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    pseudo_client_id VARCHAR(64) NOT NULL UNIQUE,
-    date_archivage DATE
+USE app_archive;
+
+CREATE TABLE IF NOT EXISTS clients_archives (
+    id INT PRIMARY KEY,
+    ano_id VARCHAR(36) NOT NULL UNIQUE,
+    date_archivage TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_ano_id (ano_id)
 );
 
-CREATE TABLE factures_archive (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    pseudo_client_id VARCHAR(64) NOT NULL,
+CREATE TABLE IF NOT EXISTS factures_archives (
+    id INT PRIMARY KEY,
+    ano_id VARCHAR(36) NOT NULL,
     montant DECIMAL(10, 2) NOT NULL,
     date_facture DATE NOT NULL,
-    FOREIGN KEY (pseudo_client_id) REFERENCES clients_archive (pseudo_client_id)
+    date_archivage TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ano_id) REFERENCES clients_archives (ano_id),
+    INDEX idx_date_facture (date_facture),
+    INDEX idx_ano_id (ano_id)
 );
