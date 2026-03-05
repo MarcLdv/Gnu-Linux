@@ -6,7 +6,7 @@ Ce guide permet de comprendre dans un premier temps comment identifier les donn�
 
 ## Initialisation des données
 
-En reprenant les tablet clients et factures on peut commencer à déterminer quelles données sont à classifier en tant que personelles. En prenant en compte le réglement du RGPD on peut aussi définir les durées de conservations pour les factures.
+En reprenant les tables clients et factures on peut commencer à déterminer quelles données sont à classifier en tant que personelles. En prenant en compte le réglement du RGPD on peut aussi définir les durées de conservations pour les factures.
 
 ### Classification des données
 
@@ -43,7 +43,7 @@ Dans ces données on peut voir que plusieurs d'entre elles sont personelles d'un
 
 Pour mettre en place le processus d'archivage il y a deux étapes. D'un coté pour les clients, c'est après 3 ans d'inactivité (aucune nouvelle facture) que ces données sont archivées anonymement grâce à un identifiant unique généré aléatoirement dans la base d'archive puis supprimées de la base de production. Pour les factures, elles restent en base de production pendant 10 ans, puis sont archivées en utilisant ce même identifiant pour garder le lien avec les données archivées.
 
-Pour ce qui est des durées de conservation, c'est la CNIL qui considère qu'une relation commerciale est terminée au bout 3 ans d'inactivité et qui impose ensuite l'anonymisation des données clients. Pour les factures le RPGD ne fournit pas de durée précise mais l'un des principe  majeurs est la limitation de conservation (Article 5). On peut donc prendre le délai minimum imposé par le code du commerce qu est de 10 ans pour des factures, pour ensuite les stockées également de façon anonyme.
+Pour ce qui est des durées de conservation, c'est la CNIL qui considère qu'une relation commerciale est terminée au bout 3 ans d'inactivité et qui impose ensuite l'anonymisation des données clients. Pour les factures le RGPD ne fournit pas de durée précise mais l'un des principe  majeurs est la limitation de conservation (Article 5). On peut donc prendre le délai minimum imposé par le code du commerce qu est de 10 ans pour des factures, pour ensuite les stockées également de façon anonyme.
 
 ## Méthode d'archivage
 
